@@ -1,208 +1,84 @@
-# Mini Project Management API 📊
-
-This is a simple **Project Management API** built using **FastAPI**. The API provides the core functionality of managing projects, tasks, and users, while also implementing user authentication, role-based access control, and task management features.
+Of course! Here's a **brief** but **professional** `README.md` you can use:
 
 ---
 
-## Features ✨
+# 📘 Project Management API
 
-### Core Features:
-- **User Authentication 🛂:**
-  - Users can authenticate via **JWT-based tokens** to ensure secure login and access.
-  
-- **Projects 📂:**
-  - **Create** new projects.
-  - **Update** existing projects.
-  - **Delete** projects.
-  - **List** all projects.
-
-- **Tasks 📝:**
-  - **Assign tasks** to specific projects.
-  - Set **deadlines ⏳**, **status** (To-Do, In Progress, Done), and **priority** (Low, Medium, High).
-  - **Assign tasks** to users.
-
-- **Filtering & Pagination 🔍:**
-  - Tasks can be filtered by **project**, **status**, or **due date**.
-  - Pagination is supported for listing tasks and projects.
-
-### Bonus Features 🌟:
-- **Role-based Access Control (RBAC):**
-  - Users can have different roles: **admin 👑**, **project manager 🧑‍💻**, **developer 👨‍💻**.
-  - The admin can manage all aspects of projects, while a project manager can only manage tasks for their assigned projects.
-
-- **Database 🗃️:**
-  - The application uses **PostgreSQL** for persistent data storage.
-  
-- **Dockerization 🐳:**
-  - The application is containerized using **Docker**, allowing easy deployment and management in various environments.
-
-- **Swagger/OpenAPI Documentation 📖:**
-  - Automatic API documentation generated using **Swagger/OpenAPI** for easy testing and interaction with the API.
+A simple **RESTful Project Management System** built with **Django Rest Framework**, **PostgreSQL**, and **Docker**.  
+Supports **user authentication**, **role-based permissions** (Admin, Project Manager, Developer), **project/task management**, and **Swagger API documentation**.
 
 ---
 
-## Setup Instructions ⚙️
+## 🛠 Tech Stack
 
-### Requirements:
-- **Python 3.7+** 🐍
-- **PostgreSQL** database 🗄️
-- **Docker** 🐋 (for containerization)
-
-### Installation 🛠️:
-
-1. **Clone the repository:**
-
-   ```bash
-   git clone https://github.com/your-repo/project-management-api.git
-   cd project-management-api
-   ```
-
-2. **Create a virtual environment:**
-
-   ```bash
-   python -m venv venv
-   source venv/bin/activate  # For Linux/macOS
-   venv\Scripts\activate     # For Windows
-   ```
-
-3. **Install dependencies:**
-
-   ```bash
-   pip install -r requirements.txt
-   ```
-
-4. **Set up PostgreSQL:**
-
-   - Make sure you have **PostgreSQL** installed and running.
-   - Create a new database (e.g., `project_management`).
-   - Update the **DATABASE_URL** in the `.env` file.
-
-5. **Run the application:**
-
-   ```bash
-   uvicorn app.main:app --reload
-   ```
-
-6. **Access the API docs:**
-   - Open `http://localhost:8000/docs` in your browser to interact with the API via the **Swagger UI**.
+- **Backend:** Python, Django, Django REST Framework
+- **Authentication:** JWT (SimpleJWT)
+- **Database:** PostgreSQL
+- **Containerization:** Docker, Docker Compose
+- **API Documentation:** Swagger / OpenAPI (drf-yasg)
 
 ---
 
-## Usage 📥:
+## ⚙️ Setup Instructions
 
-### Authentication 🔐:
+1. **Clone the repository**
 
-- **Register a user:**
+```bash
+git clone https://github.com/yourusername/project-management-api.git
+cd project-management-api
+```
 
-  POST `/register/`
+2. **Create `.env` (optional)**  
+*(If you want separate environment variables)*
 
-  Example Request Body:
-  ```json
-  {
-    "username": "john_doe",
-    "password": "password123"
-  }
-  ```
+3. **Build and start using Docker**
 
-- **Login to get the access token:**
+```bash
+docker-compose up --build
+```
 
-  POST `/login/`
+4. **Access the application**
+- API root: [http://localhost:8000/](http://localhost:8000/)
+- Admin panel: [http://localhost:8000/admin/](http://localhost:8000/admin/)
+- Swagger API docs: [http://localhost:8000/swagger/](http://localhost:8000/swagger/)
 
-  Example Request Body:
-  ```json
-  {
-    "username": "john_doe",
-    "password": "password123"
-  }
-  ```
+5. **Create a Django superuser**
 
-  The response will include a **JWT** token that you can use for further requests.
+```bash
+docker-compose exec web python manage.py createsuperuser
+```
 
----
-
-### Projects 📋:
-
-- **Create a project:**
-
-  POST `/projects/`
-
-  Example Request Body:
-  ```json
-  {
-    "name": "Project A",
-    "description": "This is a description of Project A"
-  }
-  ```
-
-- **Get all projects:**
-
-  GET `/projects/`
+✅ You're ready to go!
 
 ---
 
-### Tasks 🗂️:
+## 🏗 Architecture Decisions (Brief)
 
-- **Create a task:**
-
-  POST `/tasks/`
-
-  Example Request Body:
-  ```json
-  {
-    "name": "Task 1",
-    "description": "This is the first task",
-    "due_date": "2025-05-01T00:00:00",
-    "status": "To-Do",
-    "priority": "Medium",
-    "project_id": 1,
-    "assignee_id": 2
-  }
-  ```
-
-- **Get all tasks with filters:**
-
-  GET `/tasks/`
-
-  Example Request Parameters:
-  - `project_id=1`
-  - `status=To-Do`
+- **Django Rest Framework** was selected for its simplicity and power in building APIs rapidly.
+- **Role-based Access Control** is implemented using Django Groups (Admin, Project Manager, Developer).
+- **PostgreSQL** chosen over SQLite for better production-readiness and Docker compatibility.
+- **Docker** is used for containerized development and easy deployment (web app + database).
+- **Swagger (drf-yasg)** provides interactive API documentation for developers and testers.
+- The home page is dynamically rendered based on user login state for better UX.
 
 ---
 
-## Role-based Access Control 🛡️:
+## 📜 API Main Features
 
-- **Admin 👑** users can manage all projects and tasks.
-- **Project Managers 🧑‍💻** can manage only tasks within the projects they oversee.
-- **Developers 👨‍💻** can only view and update tasks assigned to them.
-
----
-
-## Dockerization 🐳
-
-The project comes with a **Dockerfile** and **docker-compose.yml** file for easy containerization. To run the application inside a Docker container:
-
-1. Build the Docker image:
-
-   ```bash
-   docker-compose build
-   ```
-
-2. Start the container:
-
-   ```bash
-   docker-compose up
-   ```
-
-The application will be accessible at `http://localhost:8000` in your browser.
+- **User Registration/Login** (JWT Tokens)
+- **Project Management** (CRUD)
+- **Task Management** (CRUD with priorities, deadlines, status)
+- **Filtering Tasks** by project, status, or due date
+- **Role Based Permissions**:
+  - Admin & Project Manager: Full access
+  - Developer: Read-only access
 
 ---
 
-## License 📜
+# 📣 Contribution
 
-This project is licensed under the **MIT License**.
+Pull requests are welcome! For major changes, please open an issue first to discuss what you would like to change.
 
----
 
-## Conclusion 🎉
 
-This project demonstrates the ability to design and implement a full-featured RESTful API using **FastAPI** with features like user authentication, task management, and role-based access control. It's easy to deploy using Docker and works with **PostgreSQL** for persistent data storage.
+
